@@ -6,23 +6,6 @@ play it in the browser: https://spct.itch.io/3072
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-details > summary {
-  padding: 4px;
-  width: 200px;
-  background-color: #eeeeee;
-  border: none;
-  box-shadow: 1px 1px 2px #bbbbbb;
-  cursor: pointer;
-}
-
-details > p {
-  background-color: #eeeeee;
-  padding: 4px;
-  margin: 0;
-  box-shadow: 1px 1px 2px #bbbbbb;
-}
-</style>
 </head>
 <body>
 
