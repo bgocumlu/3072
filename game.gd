@@ -23,6 +23,7 @@ func _ready():
 	Engine.max_fps = 144
 	reset()
 	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	for t in tiles:
@@ -54,23 +55,32 @@ func _process(delta):
 			tiles.append(new_tile)
 			add_child(new_tile)
 			spawn_tile = false
+			print("tile generated! ", tiles.back().grid_pos)
 
 func _input(event):
 	var moved = false
 	var merged = false
 	if event.is_action_pressed("swipe_left"):
+		if spawn_tile:
+			cancel_animation()
 		moved = move_tiles(dir.LEFT)
 		merged = merge_tiles(dir.LEFT)
 		move_tiles(dir.LEFT)
 	elif event.is_action_pressed("swipe_right"):
+		if spawn_tile:
+			cancel_animation()
 		moved = move_tiles(dir.RIGHT)
 		merged = merge_tiles(dir.RIGHT)
 		move_tiles(dir.RIGHT)
 	elif event.is_action_pressed("swipe_up"):
+		if spawn_tile:
+			cancel_animation()
 		moved = move_tiles(dir.UP)
 		merged = merge_tiles(dir.UP)
 		move_tiles(dir.UP)
 	elif event.is_action_pressed("swipe_down"):
+		if spawn_tile:
+			cancel_animation()
 		moved = move_tiles(dir.DOWN)
 		merged = merge_tiles(dir.DOWN)
 		move_tiles(dir.DOWN)
@@ -155,6 +165,8 @@ func reset():
 		remove_child(t)
 	tiles.clear()
 	
+	spawn_tile = 0
+	
 	if score > best_score:
 		best_score = score
 		$BestScore/Score.text = str(best_score)
@@ -167,6 +179,31 @@ func reset():
 		tiles.append(new_tile)
 	for t in tiles:
 		add_child(t)
+
+func cancel_animation():
+	for t in tiles:
+		var pos = get_pos(t, t.grid_pos)
+		if pos != t.position:
+			t.position = pos
+			tiles_moving = false
+				
+	if update and !tiles_moving:
+		var i = 0
+		while i < tiles.size():
+			tiles[i].update()
+			if tiles[i].dead:
+				remove_child(tiles[i])
+				tiles.pop_at(i)
+			else:
+				i += 1
+		update = false
+		
+		if spawn_tile:
+			var new_tile = generate_tile()
+			tiles.append(new_tile)
+			add_child(new_tile)
+			spawn_tile = false
+			print("tile generated! ", tiles.back().grid_pos)
 
 func move_tile(direction: dir, cols = 4):
 	var row = 0
