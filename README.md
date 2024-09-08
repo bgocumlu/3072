@@ -1,3 +1,3 @@
 # 3072
 
-play it in the browser: https://spct.itch.io/3072 
+play it in the browser: berkay-g.github.io/3072
