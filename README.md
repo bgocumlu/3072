@@ -1,3 +1,3 @@
 # 3072
 
-play it in the browser: https://berkay-g.github.io/3072/
+play it in the browser: https://bgocumlu.github.io/3072/
